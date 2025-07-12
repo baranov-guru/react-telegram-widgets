@@ -51,7 +51,9 @@ const TelegramWidgetWrap: React.FC<TelegramWidgetWrapProps> = ({
     };
   }, [createScript, onError, onLoad, onLoadCallback]);
 
-  return <div className={className} ref={ref} />;
+  return (
+    <div className={className} ref={ref} data-testid="telegram-widget-wrap" />
+  );
 };
 
 export default TelegramWidgetWrap;

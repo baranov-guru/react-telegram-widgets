@@ -12,7 +12,10 @@
         "build": "rollup -c",
         "dev": "rollup -c -w",
         "clean": "rimraf dist",
-        "prepublishOnly": "npm run clean && npm run build"
+        "prepublishOnly": "npm run clean && npm run build",
+        "test": "jest",
+        "test:watch": "jest --watch",
+        "test:coverage": "jest --coverage"
     },
     "keywords": [
         "react",
@@ -32,12 +35,18 @@
         "@rollup/plugin-commonjs": "^25.0.0",
         "@rollup/plugin-node-resolve": "^15.0.0",
         "@rollup/plugin-typescript": "^11.0.0",
+        "@testing-library/jest-dom": "^6.0.0",
+        "@testing-library/react": "^14.0.0",
+        "@types/jest": "^29.0.0",
         "@types/react": "^18.0.0",
         "@types/react-dom": "^18.0.0",
+        "jest": "^29.0.0",
+        "jest-environment-jsdom": "^29.0.0",
         "rimraf": "^5.0.0",
         "rollup": "^3.0.0",
         "rollup-plugin-dts": "^5.0.0",
         "rollup-plugin-peer-deps-external": "^2.2.4",
+        "ts-jest": "^29.0.0",
         "tslib": "^2.8.1",
         "typescript": "^5.0.0"
     },
