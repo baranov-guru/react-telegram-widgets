@@ -59,4 +59,14 @@ jspm_packages/
 *.tgz
 
 # Yarn Integrity file
-.yarn-integrity 
+.yarn-integrity
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Editor files
+*.sublime-project
+*.sublime-workspace 

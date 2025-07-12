@@ -1,9 +1,10 @@
-"use client";
+'use client';
 
-import React, { useCallback } from "react";
-import { TELEGRAM_WIDGET_SCRIPT_SRC } from "./constants";
-import { TelegramScriptElement, TelegramWidgetCommonProps } from "./types";
-import TelegramWidgetWrap from "./TelegramWidgetWrap";
+import React, { useCallback } from 'react';
+
+import { TELEGRAM_WIDGET_SCRIPT_SRC } from './constants';
+import TelegramWidgetWrap from './TelegramWidgetWrap';
+import { TelegramScriptElement, TelegramWidgetCommonProps } from './types';
 
 /**
  * Props for the TelegramCommentsWidget component.
@@ -56,18 +57,18 @@ const TelegramCommentsWidget: React.FC<TelegramCommentsWidgetProps> = ({
   className,
 }) => {
   const createScript = useCallback(() => {
-    const script = document.createElement("script");
+    const script = document.createElement('script');
     script.async = true;
     script.src = TELEGRAM_WIDGET_SCRIPT_SRC;
-    script.setAttribute("data-telegram-discussion", discussion);
+    script.setAttribute('data-telegram-discussion', discussion);
     script.setAttribute(
-      "data-comments-limit",
-      commentsLimit ? commentsLimit.toString() : "5"
+      'data-comments-limit',
+      commentsLimit ? commentsLimit.toString() : '5'
     );
-    height && script.setAttribute("data-height", height.toString());
-    color && script.setAttribute("data-color", color);
-    colorful && script.setAttribute("data-colorful", "1");
-    dark && script.setAttribute("data-dark", "1");
+    if (height) script.setAttribute('data-height', height.toString());
+    if (color) script.setAttribute('data-color', color);
+    if (colorful) script.setAttribute('data-colorful', '1');
+    if (dark) script.setAttribute('data-dark', '1');
 
     return script as TelegramScriptElement;
   }, [discussion, commentsLimit, height, color, colorful, dark]);

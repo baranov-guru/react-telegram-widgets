@@ -1,7 +1,8 @@
-"use client";
+'use client';
 
-import React, { useCallback, useEffect, useRef } from "react";
-import { TelegramScriptElement, TelegramWidgetCommonProps } from "./types";
+import React, { useCallback, useEffect, useRef } from 'react';
+
+import { TelegramScriptElement, TelegramWidgetCommonProps } from './types';
 
 /**
  * Props for the TelegramWidgetWrap component.
@@ -40,11 +41,11 @@ const TelegramWidgetWrap: React.FC<TelegramWidgetWrapProps> = ({
       if (onLoad) script.onload = () => onLoadCallback(script);
       if (container) container.appendChild(script);
     } catch (e) {
-      onError && onError(e);
+      if (onError) onError(e);
     }
     return () => {
       if (container) {
-        container.childNodes.forEach((cn) => {
+        container.childNodes.forEach(cn => {
           container.removeChild(cn);
         });
       }
@@ -52,7 +53,7 @@ const TelegramWidgetWrap: React.FC<TelegramWidgetWrapProps> = ({
   }, [createScript, onError, onLoad, onLoadCallback]);
 
   return (
-    <div className={className} ref={ref} data-testid="telegram-widget-wrap" />
+    <div className={className} ref={ref} data-testid='telegram-widget-wrap' />
   );
 };
 

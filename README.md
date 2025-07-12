@@ -274,4 +274,19 @@ npm run build
 
 # Watch mode for development
 npm run dev
+
+# Lint code
+npm run lint
+
+# Fix linting issues
+npm run lint:fix
+
+# Format code
+npm run format
+
+# Check code formatting
+npm run format:check
+
+# Run all checks (lint, format, test)
+npm run check
 ```

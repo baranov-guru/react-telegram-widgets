@@ -1,14 +1,15 @@
-import React from "react";
-import { render, screen, act } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import TelegramWidgetWrap from "../TelegramWidgetWrap";
-import { TelegramScriptElement } from "../types";
+import { render, screen, act } from '@testing-library/react';
+import React from 'react';
+
+import '@testing-library/jest-dom';
+import TelegramWidgetWrap from '../TelegramWidgetWrap';
+import { TelegramScriptElement } from '../types';
 
 // Mock script element
 const createMockScript = (): TelegramScriptElement => {
-  const script = document.createElement("script") as TelegramScriptElement;
+  const script = document.createElement('script') as TelegramScriptElement;
   script.async = false;
-  script.src = "";
+  script.src = '';
   script.setAttribute = jest.fn();
   script.onerror = null;
   script.onload = null;
@@ -19,13 +20,13 @@ const createMockScript = (): TelegramScriptElement => {
 
 // Mock iframe element
 const createMockIframe = (): HTMLIFrameElement => {
-  const iframe = document.createElement("iframe");
+  const iframe = document.createElement('iframe');
   iframe.onerror = null;
   iframe.onload = null;
   return iframe;
 };
 
-describe("TelegramWidgetWrap", () => {
+describe('TelegramWidgetWrap', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -34,31 +35,31 @@ describe("TelegramWidgetWrap", () => {
     jest.restoreAllMocks();
   });
 
-  describe("Basic rendering", () => {
-    it("should render a div with the provided className", () => {
+  describe('Basic rendering', () => {
+    it('should render a div with the provided className', () => {
       const createScript = jest.fn(() => createMockScript());
-      const className = "test-class";
+      const className = 'test-class';
 
       render(
         <TelegramWidgetWrap createScript={createScript} className={className} />
       );
 
-      const div = screen.getByTestId("telegram-widget-wrap");
+      const div = screen.getByTestId('telegram-widget-wrap');
       expect(div).toHaveClass(className);
     });
 
-    it("should render without className when not provided", () => {
+    it('should render without className when not provided', () => {
       const createScript = jest.fn(() => createMockScript());
 
       render(<TelegramWidgetWrap createScript={createScript} />);
 
-      const div = screen.getByTestId("telegram-widget-wrap");
+      const div = screen.getByTestId('telegram-widget-wrap');
       expect(div).toBeInTheDocument();
     });
   });
 
-  describe("Script creation and attachment", () => {
-    it("should call createScript function", () => {
+  describe('Script creation and attachment', () => {
+    it('should call createScript function', () => {
       const createScript = jest.fn(() => createMockScript());
 
       render(<TelegramWidgetWrap createScript={createScript} />);
@@ -66,8 +67,8 @@ describe("TelegramWidgetWrap", () => {
       expect(createScript).toHaveBeenCalledTimes(1);
     });
 
-    it("should handle createScript throwing an error", () => {
-      const error = new Error("Script creation failed");
+    it('should handle createScript throwing an error', () => {
+      const error = new Error('Script creation failed');
       const createScript = jest.fn(() => {
         throw error;
       });
@@ -82,8 +83,8 @@ describe("TelegramWidgetWrap", () => {
     });
   });
 
-  describe("Error handling", () => {
-    it("should call onError when script.onerror is triggered", () => {
+  describe('Error handling', () => {
+    it('should call onError when script.onerror is triggered', () => {
       const mockScript = createMockScript();
       const createScript = jest.fn(() => mockScript);
       const onError = jest.fn();
@@ -93,26 +94,28 @@ describe("TelegramWidgetWrap", () => {
       );
 
       // Simulate script error
-      const error = new Error("Script load failed");
-      mockScript.onerror?.(error as any);
+      const error = new Error('Script load failed');
+      mockScript.onerror?.(error as unknown as string | Event);
 
       expect(onError).toHaveBeenCalledWith(error);
     });
 
-    it("should not call onError when script.onerror is triggered but onError is not provided", () => {
+    it('should not call onError when script.onerror is triggered but onError is not provided', () => {
       const mockScript = createMockScript();
       const createScript = jest.fn(() => mockScript);
 
       render(<TelegramWidgetWrap createScript={createScript} />);
 
       // Simulate script error
-      const error = new Error("Script load failed");
-      expect(() => mockScript.onerror?.(error as any)).not.toThrow();
+      const error = new Error('Script load failed');
+      expect(() =>
+        mockScript.onerror?.(error as unknown as string | Event)
+      ).not.toThrow();
     });
   });
 
-  describe("Load handling", () => {
-    it("should not call onLoad when script.onload is triggered but iframe does not exist", () => {
+  describe('Load handling', () => {
+    it('should not call onLoad when script.onload is triggered but iframe does not exist', () => {
       const mockScript = createMockScript();
       mockScript._iframe = undefined;
 
@@ -125,13 +128,13 @@ describe("TelegramWidgetWrap", () => {
 
       // Simulate script load
       act(() => {
-        mockScript.onload?.(new Event("load"));
+        mockScript.onload?.(new Event('load'));
       });
 
       expect(onLoad).not.toHaveBeenCalled();
     });
 
-    it("should not set iframe error handler when onError is not provided", () => {
+    it('should not set iframe error handler when onError is not provided', () => {
       const mockScript = createMockScript();
       const mockIframe = createMockIframe();
       mockScript._iframe = mockIframe;
@@ -142,15 +145,15 @@ describe("TelegramWidgetWrap", () => {
 
       // Simulate script load to trigger iframe setup
       act(() => {
-        mockScript.onload?.(new Event("load"));
+        mockScript.onload?.(new Event('load'));
       });
 
       expect(mockIframe.onerror).toBeNull();
     });
   });
 
-  describe("Dependencies and re-renders", () => {
-    it("should recreate script when createScript function changes", () => {
+  describe('Dependencies and re-renders', () => {
+    it('should recreate script when createScript function changes', () => {
       const createScript1 = jest.fn(() => createMockScript());
       const createScript2 = jest.fn(() => createMockScript());
 
@@ -165,7 +168,7 @@ describe("TelegramWidgetWrap", () => {
       expect(createScript2).toHaveBeenCalledTimes(1);
     });
 
-    it("should not recreate script when other props change", () => {
+    it('should not recreate script when other props change', () => {
       const createScript = jest.fn(() => createMockScript());
 
       const { rerender } = render(
@@ -175,7 +178,7 @@ describe("TelegramWidgetWrap", () => {
       expect(createScript).toHaveBeenCalledTimes(1);
 
       rerender(
-        <TelegramWidgetWrap createScript={createScript} className="new-class" />
+        <TelegramWidgetWrap createScript={createScript} className='new-class' />
       );
 
       expect(createScript).toHaveBeenCalledTimes(1);
