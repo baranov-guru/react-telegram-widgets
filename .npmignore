@@ -1,0 +1,48 @@
+# Source files (not needed in published package)
+src/
+tests/
+__tests__/
+
+# Test files in dist (compiled tests)
+dist/__tests__/
+dist/**/*.test.*
+dist/**/*.spec.*
+
+# Development dependencies and configs
+.eslintrc*
+eslint.config.mjs
+.prettierrc
+.prettierignore
+jest.config.js
+rollup.config.js
+tsconfig.json
+
+# Documentation and development files
+README.md
+LICENSE
+.github/
+
+# Development tools
+.vscode/
+.idea/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Temporary files
+*.tmp
+*.temp 
