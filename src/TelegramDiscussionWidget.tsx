@@ -7,12 +7,12 @@ import TelegramWidgetWrap from './TelegramWidgetWrap';
 import { TelegramScriptElement, TelegramWidgetCommonProps } from './types';
 
 /**
- * Props for the TelegramCommentsWidget component.
+ * Props for the TelegramDiscussionWidget component.
  *
  * @see https://core.telegram.org/widgets/discussion
  *
  */
-export type TelegramCommentsWidgetProps = {
+export type TelegramDiscussionWidgetProps = {
   /**
    * The discussion identifier in the format "<channel>/<post_id>" (e.g., "durov/1").
    */
@@ -40,12 +40,12 @@ export type TelegramCommentsWidgetProps = {
 } & TelegramWidgetCommonProps;
 
 /**
- * A React component that embeds a Telegram comments widget.
+ * A React component that embeds a Telegram discussion widget.
  *
- * @param {TelegramCommentsWidgetProps} props - The component props.
+ * @param {TelegramDiscussionWidgetProps} props - The component props.
  * @returns {React.ReactElement} The rendered component.
  */
-const TelegramCommentsWidget: React.FC<TelegramCommentsWidgetProps> = ({
+const TelegramDiscussionWidget: React.FC<TelegramDiscussionWidgetProps> = ({
   discussion,
   commentsLimit,
   height,
@@ -83,4 +83,4 @@ const TelegramCommentsWidget: React.FC<TelegramCommentsWidgetProps> = ({
   );
 };
 
-export default TelegramCommentsWidget;
+export default TelegramDiscussionWidget;

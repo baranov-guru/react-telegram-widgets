@@ -1,15 +1,15 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 
-import TelegramCommentsWidget, {
-  TelegramCommentsWidgetProps,
-} from '../TelegramCommentsWidget';
+import TelegramDiscussionWidget, {
+  TelegramDiscussionWidgetProps,
+} from '../TelegramDiscussionWidget';
 import TelegramWidgetWrap from '../TelegramWidgetWrap';
 
 jest.mock('../TelegramWidgetWrap', () => jest.fn(() => null));
 
-describe('TelegramCommentsWidget', () => {
-  const defaultProps: TelegramCommentsWidgetProps = {
+describe('TelegramDiscussionWidget', () => {
+  const defaultProps: TelegramDiscussionWidgetProps = {
     discussion: 'durov/1',
   };
 
@@ -18,7 +18,7 @@ describe('TelegramCommentsWidget', () => {
   });
 
   it('renders without crashing', () => {
-    render(<TelegramCommentsWidget {...defaultProps} />);
+    render(<TelegramDiscussionWidget {...defaultProps} />);
     expect(TelegramWidgetWrap).toHaveBeenCalled();
   });
 
@@ -26,7 +26,7 @@ describe('TelegramCommentsWidget', () => {
     const onLoad = jest.fn();
     const onError = jest.fn();
     render(
-      <TelegramCommentsWidget
+      <TelegramDiscussionWidget
         {...defaultProps}
         onLoad={onLoad}
         onError={onError}
@@ -44,7 +44,7 @@ describe('TelegramCommentsWidget', () => {
       script = createScript();
       return null;
     });
-    render(<TelegramCommentsWidget discussion='durov/123' />);
+    render(<TelegramDiscussionWidget discussion='durov/123' />);
     expect(script).toBeDefined();
     expect(script!.getAttribute('data-telegram-discussion')).toBe('durov/123');
     expect(script!.getAttribute('data-comments-limit')).toBe('5');
@@ -61,7 +61,7 @@ describe('TelegramCommentsWidget', () => {
       return null;
     });
     render(
-      <TelegramCommentsWidget
+      <TelegramDiscussionWidget
         discussion='durov/2'
         commentsLimit={10}
         height={400}
@@ -85,7 +85,7 @@ describe('TelegramCommentsWidget', () => {
       script = createScript();
       return null;
     });
-    render(<TelegramCommentsWidget discussion='durov/3' />);
+    render(<TelegramDiscussionWidget discussion='durov/3' />);
     expect(script!.getAttribute('data-comments-limit')).toBe('5');
   });
 
@@ -96,7 +96,7 @@ describe('TelegramCommentsWidget', () => {
       return null;
     });
     render(
-      <TelegramCommentsWidget
+      <TelegramDiscussionWidget
         discussion='durov/4'
         commentsLimit={15}
         height={300}

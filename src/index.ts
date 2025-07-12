@@ -1,9 +1,9 @@
 // Re-export components
-export { default as TelegramCommentsWidget } from './TelegramCommentsWidget';
+export { default as TelegramDiscussionWidget } from './TelegramDiscussionWidget';
 export { default as TelegramPostWidget } from './TelegramPostWidget';
 
 // Re-export types
-export type { TelegramCommentsWidgetProps } from './TelegramCommentsWidget';
+export type { TelegramDiscussionWidgetProps } from './TelegramDiscussionWidget';
 export type { TelegramPostWidgetProps } from './TelegramPostWidget';
 export type { TelegramScriptElement, TelegramWidgetCommonProps } from './types';
 
