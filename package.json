@@ -25,7 +25,7 @@
         "comments",
         "embed"
     ],
-    "author": "Your Name",
+    "author": "Alexey Baranov (Nejivoi) <https://github.com/Nejivoi>",
     "license": "MIT",
     "peerDependencies": {
         "react": ">=16.8.0",
