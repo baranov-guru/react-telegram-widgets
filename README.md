@@ -2,7 +2,6 @@
 
 [![npm version](https://img.shields.io/npm/v/@baranov-guru/react-telegram-widgets.svg)](https://www.npmjs.com/package/@baranov-guru/react-telegram-widgets)
 [![npm downloads](https://img.shields.io/npm/dm/@baranov-guru/react-telegram-widgets.svg)](https://www.npmjs.com/package/@baranov-guru/react-telegram-widgets)
-[![npm bundle size](https://img.shields.io/bundlephobia/min/@baranov-guru/react-telegram-widgets)](https://bundlephobia.com/package/@baranov-guru/react-telegram-widgets)
 [![npm license](https://img.shields.io/npm/l/@baranov-guru/react-telegram-widgets.svg)](https://github.com/baranov-guru/react-telegram-widgets/blob/main/LICENSE)
 [![GitHub Actions](https://img.shields.io/github/actions/workflow/status/baranov-guru/react-telegram-widgets/ci.yml?branch=main)](https://github.com/baranov-guru/react-telegram-widgets/actions)
 [![Codecov](https://img.shields.io/codecov/c/github/baranov-guru/react-telegram-widgets)](https://codecov.io/gh/baranov-guru/react-telegram-widgets)
@@ -42,7 +41,7 @@ function App() {
       <h1>My Blog Post</h1>
       <p>Check out this Telegram post:</p>
       <TelegramPostWidget
-        post='durov/123'
+        post='alexey_baranov_dev/61'
         width='100%'
         dark={true}
         onLoad={() => console.log('Post loaded successfully!')}
@@ -53,19 +52,19 @@ function App() {
 }
 ```
 
-### TelegramCommentsWidget
+### TelegramDiscussionWidget
 
 Embed Telegram comments for a discussion:
 
 ```tsx
-import { TelegramCommentsWidget } from '@baranov-guru/react-telegram-widgets';
+import { TelegramDiscussionWidget } from '@baranov-guru/react-telegram-widgets';
 
 function App() {
   return (
     <div>
       <h1>Discussion</h1>
-      <TelegramCommentsWidget
-        discussion='durov/123'
+      <TelegramDiscussionWidget
+        discussion='alexey_baranov_dev/61'
         commentsLimit={10}
         height={400}
         color='#ff0000'
@@ -83,29 +82,29 @@ function App() {
 
 ### TelegramPostWidget Props
 
-| Prop        | Type                               | Default      | Description                                                                 |
-| ----------- | ---------------------------------- | ------------ | --------------------------------------------------------------------------- |
-| `post`      | `string`                           | **required** | The post identifier in format "channel/post_id" (e.g., "durov/1")           |
-| `userpic`   | `boolean \| "auto"`                | `"auto"`     | Whether to show user pictures. "auto" shows them only if post contains them |
-| `width`     | `CSSProperties["width"] \| "100%"` | `"100%"`     | The width of the widget                                                     |
-| `dark`      | `boolean`                          | `false`      | Enable dark theme                                                           |
-| `className` | `string`                           | -            | Optional CSS class for the container                                        |
-| `onError`   | `(e: unknown) => void`             | -            | Callback when an error occurs                                               |
-| `onLoad`    | `() => void`                       | -            | Callback when the widget loads successfully                                 |
+| Prop        | Type                               | Default      | Description                                                                    |
+| ----------- | ---------------------------------- | ------------ | ------------------------------------------------------------------------------ |
+| `post`      | `string`                           | **required** | The post identifier in format "channel/post_id" (e.g., "alexey_baranov_dev/1") |
+| `userpic`   | `boolean \| "auto"`                | `"auto"`     | Whether to show user pictures. "auto" shows them only if post contains them    |
+| `width`     | `CSSProperties["width"] \| "100%"` | `"100%"`     | The width of the widget                                                        |
+| `dark`      | `boolean`                          | `false`      | Enable dark theme                                                              |
+| `className` | `string`                           | -            | Optional CSS class for the container                                           |
+| `onError`   | `(e: unknown) => void`             | -            | Callback when an error occurs                                                  |
+| `onLoad`    | `() => void`                       | -            | Callback when the widget loads successfully                                    |
 
-### TelegramCommentsWidget Props
+### TelegramDiscussionWidget Props
 
-| Prop            | Type                   | Default      | Description                                                             |
-| --------------- | ---------------------- | ------------ | ----------------------------------------------------------------------- |
-| `discussion`    | `string`               | **required** | The discussion identifier in format "channel/post_id" (e.g., "durov/1") |
-| `commentsLimit` | `number`               | `5`          | Maximum number of comments to display                                   |
-| `height`        | `number`               | -            | Height of the widget in pixels                                          |
-| `color`         | `string`               | -            | Color of widget elements (hex format, e.g., "#cbcbcb")                  |
-| `colorful`      | `boolean`              | `false`      | Enable colorful usernames                                               |
-| `dark`          | `boolean`              | `false`      | Enable dark theme                                                       |
-| `className`     | `string`               | -            | Optional CSS class for the container                                    |
-| `onError`       | `(e: unknown) => void` | -            | Callback when an error occurs                                           |
-| `onLoad`        | `() => void`           | -            | Callback when the widget loads successfully                             |
+| Prop            | Type                   | Default      | Description                                                                                                                    |
+| --------------- | ---------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| `discussion`    | `string`               | **required** | The discussion identifier in format "channel/post_id" or just "channel" (e.g., "alexey_baranov_dev/1" or "alexey_baranov_dev") |
+| `commentsLimit` | `number`               | `5`          | Maximum number of comments to display                                                                                          |
+| `height`        | `number`               | -            | Height of the widget in pixels                                                                                                 |
+| `color`         | `string`               | -            | Color of widget elements (hex format, e.g., "#cbcbcb")                                                                         |
+| `colorful`      | `boolean`              | `false`      | Enable colorful usernames                                                                                                      |
+| `dark`          | `boolean`              | `false`      | Enable dark theme                                                                                                              |
+| `className`     | `string`               | -            | Optional CSS class for the container                                                                                           |
+| `onError`       | `(e: unknown) => void` | -            | Callback when an error occurs                                                                                                  |
+| `onLoad`        | `() => void`           | -            | Callback when the widget loads successfully                                                                                    |
 
 ## Examples
 
@@ -114,7 +113,7 @@ function App() {
 ```tsx
 import {
   TelegramPostWidget,
-  TelegramCommentsWidget,
+  TelegramDiscussionWidget,
 } from '@baranov-guru/react-telegram-widgets';
 
 function BlogPost() {
@@ -124,12 +123,16 @@ function BlogPost() {
       <p>Article content...</p>
 
       {/* Embed a related Telegram post */}
-      <TelegramPostWidget post='durov/456' width='100%' dark={true} />
+      <TelegramPostWidget
+        post='alexey_baranov_dev/1'
+        width='100%'
+        dark={true}
+      />
 
       {/* Add comments section */}
       <h2>Comments</h2>
-      <TelegramCommentsWidget
-        discussion='durov/456'
+      <TelegramDiscussionWidget
+        discussion='alexey_baranov_dev'
         commentsLimit={20}
         height={500}
         colorful={true}
@@ -156,7 +159,7 @@ function SafeTelegramWidget() {
 
   return (
     <TelegramPostWidget
-      post='durov/123'
+      post='alexey_baranov_dev/61'
       onError={handleError}
       onLoad={handleSuccess}
     />
@@ -167,12 +170,12 @@ function SafeTelegramWidget() {
 ### Custom Styling
 
 ```tsx
-import { TelegramCommentsWidget } from '@baranov-guru/react-telegram-widgets';
+import { TelegramDiscussionWidget } from '@baranov-guru/react-telegram-widgets';
 
 function CustomComments() {
   return (
-    <TelegramCommentsWidget
-      discussion='durov/789'
+    <TelegramDiscussionWidget
+      discussion='alexey_baranov_dev/61'
       commentsLimit={15}
       height={600}
       color='#4a90e2'
@@ -192,8 +195,8 @@ The package includes full TypeScript support with exported types:
 import {
   TelegramPostWidget,
   TelegramPostWidgetProps,
-  TelegramCommentsWidget,
-  TelegramCommentsWidgetProps,
+  TelegramDiscussionWidget,
+  TelegramDiscussionWidgetProps,
 } from '@baranov-guru/react-telegram-widgets';
 
 // Use the types for your own components
