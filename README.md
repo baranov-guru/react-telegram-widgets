@@ -5,6 +5,7 @@
 [![npm bundle size](https://img.shields.io/bundlephobia/min/@baranov-guru/react-telegram-widgets)](https://bundlephobia.com/package/@baranov-guru/react-telegram-widgets)
 [![npm license](https://img.shields.io/npm/l/@baranov-guru/react-telegram-widgets.svg)](https://github.com/baranov-guru/react-telegram-widgets/blob/main/LICENSE)
 [![GitHub Actions](https://img.shields.io/github/actions/workflow/status/baranov-guru/react-telegram-widgets/ci.yml?branch=main)](https://github.com/baranov-guru/react-telegram-widgets/actions)
+[![Codecov](https://img.shields.io/codecov/c/github/baranov-guru/react-telegram-widgets)](https://codecov.io/gh/baranov-guru/react-telegram-widgets)
 [![GitHub issues](https://img.shields.io/github/issues/baranov-guru/react-telegram-widgets.svg)](https://github.com/baranov-guru/react-telegram-widgets/issues)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/baranov-guru/react-telegram-widgets.svg)](https://github.com/baranov-guru/react-telegram-widgets/pulls)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -33,7 +34,7 @@ yarn add @baranov-guru/react-telegram-widgets
 Embed a Telegram post in your React application:
 
 ```tsx
-import { TelegramPostWidget } from "@baranov-guru/react-telegram-widgets";
+import { TelegramPostWidget } from '@baranov-guru/react-telegram-widgets';
 
 function App() {
   return (
@@ -41,11 +42,11 @@ function App() {
       <h1>My Blog Post</h1>
       <p>Check out this Telegram post:</p>
       <TelegramPostWidget
-        post="durov/123"
-        width="100%"
+        post='durov/123'
+        width='100%'
         dark={true}
-        onLoad={() => console.log("Post loaded successfully!")}
-        onError={(error) => console.error("Failed to load post:", error)}
+        onLoad={() => console.log('Post loaded successfully!')}
+        onError={error => console.error('Failed to load post:', error)}
       />
     </div>
   );
@@ -57,21 +58,21 @@ function App() {
 Embed Telegram comments for a discussion:
 
 ```tsx
-import { TelegramCommentsWidget } from "@baranov-guru/react-telegram-widgets";
+import { TelegramCommentsWidget } from '@baranov-guru/react-telegram-widgets';
 
 function App() {
   return (
     <div>
       <h1>Discussion</h1>
       <TelegramCommentsWidget
-        discussion="durov/123"
+        discussion='durov/123'
         commentsLimit={10}
         height={400}
-        color="#ff0000"
+        color='#ff0000'
         colorful={true}
         dark={true}
-        onLoad={() => console.log("Comments loaded!")}
-        onError={(error) => console.error("Failed to load comments:", error)}
+        onLoad={() => console.log('Comments loaded!')}
+        onError={error => console.error('Failed to load comments:', error)}
       />
     </div>
   );
@@ -114,7 +115,7 @@ function App() {
 import {
   TelegramPostWidget,
   TelegramCommentsWidget,
-} from "@baranov-guru/react-telegram-widgets";
+} from '@baranov-guru/react-telegram-widgets';
 
 function BlogPost() {
   return (
@@ -123,12 +124,12 @@ function BlogPost() {
       <p>Article content...</p>
 
       {/* Embed a related Telegram post */}
-      <TelegramPostWidget post="durov/456" width="100%" dark={true} />
+      <TelegramPostWidget post='durov/456' width='100%' dark={true} />
 
       {/* Add comments section */}
       <h2>Comments</h2>
       <TelegramCommentsWidget
-        discussion="durov/456"
+        discussion='durov/456'
         commentsLimit={20}
         height={500}
         colorful={true}
@@ -141,21 +142,21 @@ function BlogPost() {
 ### With Error Handling
 
 ```tsx
-import { TelegramPostWidget } from "@baranov-guru/react-telegram-widgets";
+import { TelegramPostWidget } from '@baranov-guru/react-telegram-widgets';
 
 function SafeTelegramWidget() {
   const handleError = (error: unknown) => {
-    console.error("Telegram widget error:", error);
+    console.error('Telegram widget error:', error);
     // Show fallback content or error message
   };
 
   const handleSuccess = () => {
-    console.log("Telegram widget loaded successfully");
+    console.log('Telegram widget loaded successfully');
   };
 
   return (
     <TelegramPostWidget
-      post="durov/123"
+      post='durov/123'
       onError={handleError}
       onLoad={handleSuccess}
     />
@@ -166,18 +167,18 @@ function SafeTelegramWidget() {
 ### Custom Styling
 
 ```tsx
-import { TelegramCommentsWidget } from "@baranov-guru/react-telegram-widgets";
+import { TelegramCommentsWidget } from '@baranov-guru/react-telegram-widgets';
 
 function CustomComments() {
   return (
     <TelegramCommentsWidget
-      discussion="durov/789"
+      discussion='durov/789'
       commentsLimit={15}
       height={600}
-      color="#4a90e2"
+      color='#4a90e2'
       colorful={true}
       dark={true}
-      className="my-custom-comments-widget"
+      className='my-custom-comments-widget'
     />
   );
 }
@@ -193,10 +194,10 @@ import {
   TelegramPostWidgetProps,
   TelegramCommentsWidget,
   TelegramCommentsWidgetProps,
-} from "@baranov-guru/react-telegram-widgets";
+} from '@baranov-guru/react-telegram-widgets';
 
 // Use the types for your own components
-const MyComponent: React.FC<TelegramPostWidgetProps> = (props) => {
+const MyComponent: React.FC<TelegramPostWidgetProps> = props => {
   return <TelegramPostWidget {...props} />;
 };
 ```
@@ -238,7 +239,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 This package uses GitHub Actions for automated publishing. To publish a new version:
 
 1. **Set up NPM Token**: Add your NPM token as a GitHub secret named `NPM_TOKEN`
-
    - Go to your GitHub repository settings
    - Navigate to Secrets and variables → Actions
    - Add a new secret with name `NPM_TOKEN` and your NPM access token as the value
