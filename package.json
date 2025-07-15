@@ -1,6 +1,6 @@
 {
   "name": "@baranov-guru/react-telegram-widgets",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React components for embedding Telegram posts and comments widgets",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
