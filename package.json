@@ -1,7 +1,7 @@
 {
   "name": "@baranov-guru/react-telegram-widgets",
   "version": "1.0.1",
-  "description": "React components for embedding Telegram posts and comments widgets",
+  "description": "React components for embedding Telegram posts, comments, login, and share widgets",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
@@ -29,6 +29,10 @@
     "post",
     "comments",
     "discussion",
+    "login",
+    "share",
+    "auth",
+    "oidc",
     "embed"
   ],
   "author": "Alexey Baranov (Nejivoi) <https://github.com/Nejivoi>",

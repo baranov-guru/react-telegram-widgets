@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { TelegramScriptElement, TelegramWidgetCommonProps } from './types';
 
@@ -12,45 +12,64 @@ type TelegramWidgetWrapProps = {
    * Function that creates and returns a Telegram script element.
    */
   createScript: () => TelegramScriptElement;
+  /**
+   * Optional hook invoked before the script is appended.
+   * Return a cleanup function to run on unmount or before re-insert.
+   */
+  prepare?: () => void | (() => void);
 } & TelegramWidgetCommonProps;
 
 const TelegramWidgetWrap: React.FC<TelegramWidgetWrapProps> = ({
   className,
   createScript,
+  prepare,
   onLoad,
   onError,
 }) => {
   const ref = useRef<HTMLDivElement | null>(null);
+  const onLoadRef = useRef(onLoad);
+  const onErrorRef = useRef(onError);
 
-  const onLoadCallback = useCallback(
-    (script: TelegramScriptElement) => {
-      const { _iframe } = script;
-      if (_iframe) {
-        if (onError) _iframe.onerror = onError;
-        if (onLoad) _iframe.onload = onLoad;
-      }
-    },
-    [onError, onLoad]
-  );
+  onLoadRef.current = onLoad;
+  onErrorRef.current = onError;
 
   useEffect(() => {
     const container = ref.current;
+    let prepareCleanup: void | (() => void);
+
     try {
+      prepareCleanup = prepare?.();
       const script = createScript();
-      if (onError) script.onerror = onError;
-      if (onLoad) script.onload = () => onLoadCallback(script);
+      script.onerror = event => {
+        onErrorRef.current?.(event);
+      };
+      script.onload = () => {
+        const { _iframe } = script;
+        if (_iframe) {
+          _iframe.onerror = event => {
+            onErrorRef.current?.(event);
+          };
+          _iframe.onload = () => {
+            onLoadRef.current?.();
+          };
+        }
+      };
       if (container) container.appendChild(script);
     } catch (e) {
-      if (onError) onError(e);
+      onErrorRef.current?.(e);
     }
+
     return () => {
+      if (typeof prepareCleanup === 'function') {
+        prepareCleanup();
+      }
       if (container) {
-        container.childNodes.forEach(cn => {
-          container.removeChild(cn);
-        });
+        while (container.firstChild) {
+          container.removeChild(container.firstChild);
+        }
       }
     };
-  }, [createScript, onError, onLoad, onLoadCallback]);
+  }, [createScript, prepare]);
 
   return (
     <div className={className} ref={ref} data-testid='telegram-widget-wrap' />
