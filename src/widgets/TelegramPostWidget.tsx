@@ -2,15 +2,14 @@
 
 import React, { CSSProperties, useCallback } from 'react';
 
-import { TELEGRAM_WIDGET_SCRIPT_SRC } from './constants';
-import TelegramWidgetWrap from './TelegramWidgetWrap';
-import { TelegramScriptElement, TelegramWidgetCommonProps } from './types';
+import { createTelegramWidgetScript } from '../shared/createTelegramWidgetScript';
+import TelegramWidgetWrap from '../shared/TelegramWidgetWrap';
+import { TelegramWidgetCommonProps } from '../shared/types';
 
 /**
  * Props for the TelegramPostWidget component.
  *
  * @see https://core.telegram.org/widgets/posts
- *
  */
 export type TelegramPostWidgetProps = {
   /**
@@ -47,17 +46,18 @@ const TelegramPostWidget: React.FC<TelegramPostWidgetProps> = ({
   className,
 }) => {
   const createScript = useCallback(() => {
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = TELEGRAM_WIDGET_SCRIPT_SRC;
+    const script = createTelegramWidgetScript();
     script.setAttribute('data-telegram-post', post);
     if (userpic !== 'auto') {
       script.setAttribute('data-userpic', userpic.toString());
     }
-    if (width) script.setAttribute('data-width', width.toString());
-    if (dark) script.setAttribute('data-dark', '1');
-
-    return script as TelegramScriptElement;
+    if (width) {
+      script.setAttribute('data-width', width.toString());
+    }
+    if (dark) {
+      script.setAttribute('data-dark', '1');
+    }
+    return script;
   }, [post, userpic, width, dark]);
 
   return (
