@@ -19,7 +19,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          # Trusted Publishing (OIDC) requires npm >= 11.5.1; Node 24 ships a recent enough npm.
+          node-version: '24'
           registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
 
@@ -39,6 +40,12 @@ jobs:
         run: npm run build
 
       - name: Publish to npm
-        run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        # Do not set NODE_AUTH_TOKEN — Trusted Publishing uses OIDC.
+        # setup-node with registry-url writes an _authToken line that blocks OIDC
+        # when NODE_AUTH_TOKEN is missing or wrong; strip it before publish.
+        run: |
+          npmrc="${NPM_CONFIG_USERCONFIG:-$HOME/.npmrc}"
+          if [ -f "$npmrc" ]; then
+            sed -i '/_authToken/d' "$npmrc"
+          fi
+          npm publish --access public --provenance

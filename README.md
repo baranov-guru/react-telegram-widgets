@@ -507,27 +507,37 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Publishing
 
-This package uses GitHub Actions for automated publishing. To publish a new version:
+This package publishes from GitHub Actions via **npm Trusted Publishing (OIDC)**.
+No long-lived `NPM_TOKEN` is required for publish.
 
-1. **Set up NPM Token**: Add your NPM token as a GitHub secret named `NPM_TOKEN`
-   - Go to your GitHub repository settings
-   - Navigate to Secrets and variables → Actions
-   - Add a new secret with name `NPM_TOKEN` and your NPM access token as the value
+1. **Trusted Publisher** (one-time, on npmjs.com):
+   - Open `@baranov-guru/react-telegram-widgets` → **Settings** → **Trusted Publisher**
+   - Repository: `baranov-guru/react-telegram-widgets`
+   - Workflow filename: `publish.yml` (must match `.github/workflows/publish.yml` exactly)
 
-2. **Create a Release**:
-   - Create a new release on GitHub
-   - Tag it with the version (e.g., `v1.0.1`)
-   - The workflow will automatically build, test, and publish to npm
+2. **Bump version and create a Release**:
+   - Update `version` in `package.json` (e.g. `npm version minor`) and push
+   - Create a GitHub Release tagged with the same version (e.g. `v1.1.0`)
+   - Workflow: lint → test → build → `npm publish` with provenance via OIDC
+
+If publish fails with `404` / `ENEEDAUTH` while Trusted Publisher is configured, check
+Node/npm version in the workflow (need npm ≥ 11.5.1), that `NODE_AUTH_TOKEN` is **not**
+set on the publish step, and that the Trusted Publisher workflow name matches exactly.
 
 ### Manual Publishing
 
-If you prefer to publish manually:
+For a one-off local publish (logged in as the package owner):
 
 ```bash
 npm run build
 npm publish --access public
 ```
 
+### Re-running a failed release
+
+After fixing the workflow or Trusted Publisher config, re-run the failed
+**Publish Package** job from the Actions tab. Do **not** bump the version again if
+that version never landed on npm.
 ## Development
 
 ```bash
