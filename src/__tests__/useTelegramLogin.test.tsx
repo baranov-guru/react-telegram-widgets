@@ -1,10 +1,10 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 
-import { loadTelegramLoginScript } from '../loadTelegramLoginScript';
-import { TelegramLoginSdk } from '../types';
-import { useTelegramLogin } from '../useTelegramLogin';
+import { loadTelegramLoginScript } from '../login/loadTelegramLoginScript';
+import { TelegramLoginSdk } from '../login/types';
+import { useTelegramLogin } from '../login/useTelegramLogin';
 
-jest.mock('../loadTelegramLoginScript', () => ({
+jest.mock('../login/loadTelegramLoginScript', () => ({
   loadTelegramLoginScript: jest.fn(),
 }));
 
@@ -186,5 +186,44 @@ describe('useTelegramLogin', () => {
     expect(onError).toHaveBeenCalledWith(
       'Failed to load Telegram Login script'
     );
+  });
+
+  it('reports login() failures after a successful init', async () => {
+    const onError = jest.fn();
+    const { result } = renderHook(() =>
+      useTelegramLogin({ clientId: 1, onError })
+    );
+
+    await waitFor(() => {
+      expect(result.current.isReady).toBe(true);
+    });
+
+    loadMock.mockRejectedValueOnce(new Error('Failed to start Telegram Login'));
+
+    await act(async () => {
+      await result.current.login();
+    });
+
+    expect(result.current.error).toBe('Failed to start Telegram Login');
+    expect(onError).toHaveBeenCalledWith('Failed to start Telegram Login');
+    expect(result.current.isLoading).toBe(false);
+  });
+
+  it('treats a result without id_token as an error', async () => {
+    const onError = jest.fn();
+    const { result } = renderHook(() =>
+      useTelegramLogin({ clientId: 1, onError })
+    );
+
+    await waitFor(() => {
+      expect(result.current.isReady).toBe(true);
+    });
+
+    act(() => {
+      initCallback?.({} as never);
+    });
+
+    expect(onError).toHaveBeenCalledWith('Telegram Login failed');
+    expect(result.current.error).toBe('Telegram Login failed');
   });
 });

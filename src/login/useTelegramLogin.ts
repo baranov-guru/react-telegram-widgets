@@ -7,13 +7,10 @@ import {
   TelegramLoginInitOptions,
   TelegramLoginResult,
   TelegramLoginScope,
-  TelegramLoginUser,
+  TelegramLoginSuccess,
 } from './types';
 
-export type TelegramLoginSuccess = {
-  id_token: string;
-  user: TelegramLoginUser;
-};
+export type { TelegramLoginSuccess } from './types';
 
 export type UseTelegramLoginOptions = {
   /**
@@ -148,7 +145,6 @@ export const useTelegramLogin = ({
     return () => {
       cancelled = true;
     };
-    // scope is represented by scopeKey to avoid array identity churn
   }, [autoInit, clientId, lang, nonce, scopeKey, buildOptions, handleResult]);
 
   const login = useCallback(async () => {

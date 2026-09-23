@@ -1,13 +1,9 @@
 'use client';
 
-import React, { isValidElement, cloneElement, ReactElement } from 'react';
+import React, { cloneElement, isValidElement, ReactElement } from 'react';
 
-import {
-  useTelegramLogin,
-  TelegramLoginSuccess,
-  UseTelegramLoginOptions,
-} from './useTelegramLogin';
-import { TelegramLoginScope } from './types';
+import { useTelegramLogin, UseTelegramLoginOptions } from './useTelegramLogin';
+import { TelegramLoginScope, TelegramLoginSuccess } from './types';
 
 /**
  * Props for the TelegramLoginWidget component (OpenID Connect login).

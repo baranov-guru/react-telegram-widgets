@@ -2,14 +2,13 @@
 
 import React, { useCallback, useId, useRef } from 'react';
 
-import { TELEGRAM_WIDGET_SCRIPT_SRC } from './constants';
-import TelegramWidgetWrap from './TelegramWidgetWrap';
+import { createTelegramWidgetScript } from '../shared/createTelegramWidgetScript';
+import TelegramWidgetWrap from '../shared/TelegramWidgetWrap';
 import {
   TelegramLegacyLoginData,
-  TelegramScriptElement,
   TelegramWidgetCommonProps,
   TelegramWidgetSize,
-} from './types';
+} from '../shared/types';
 
 /**
  * Props for the TelegramLegacyLoginWidget component.
@@ -80,9 +79,7 @@ const TelegramLegacyLoginWidget: React.FC<TelegramLegacyLoginWidgetProps> = ({
   onAuthRef.current = onAuth;
 
   const createScript = useCallback(() => {
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = TELEGRAM_WIDGET_SCRIPT_SRC;
+    const script = createTelegramWidgetScript();
     script.setAttribute('data-telegram-login', botName);
     if (size) {
       script.setAttribute('data-size', size);
@@ -102,7 +99,7 @@ const TelegramLegacyLoginWidget: React.FC<TelegramLegacyLoginWidgetProps> = ({
     if (hasOnAuth) {
       script.setAttribute('data-onauth', `${callbackName}(user)`);
     }
-    return script as TelegramScriptElement;
+    return script;
   }, [
     botName,
     size,

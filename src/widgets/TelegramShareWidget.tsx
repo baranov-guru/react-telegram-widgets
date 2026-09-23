@@ -2,13 +2,9 @@
 
 import React, { useCallback } from 'react';
 
-import { TELEGRAM_WIDGET_SCRIPT_SRC } from './constants';
-import TelegramWidgetWrap from './TelegramWidgetWrap';
-import {
-  TelegramScriptElement,
-  TelegramWidgetCommonProps,
-  TelegramWidgetSize,
-} from './types';
+import { createTelegramWidgetScript } from '../shared/createTelegramWidgetScript';
+import TelegramWidgetWrap from '../shared/TelegramWidgetWrap';
+import { TelegramWidgetCommonProps, TelegramWidgetSize } from '../shared/types';
 
 /**
  * Props for the TelegramShareWidget component.
@@ -45,9 +41,7 @@ const TelegramShareWidget: React.FC<TelegramShareWidgetProps> = ({
   className,
 }) => {
   const createScript = useCallback(() => {
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = TELEGRAM_WIDGET_SCRIPT_SRC;
+    const script = createTelegramWidgetScript();
     script.setAttribute('data-telegram-share-url', url);
     if (comment) {
       script.setAttribute('data-comment', comment);
@@ -55,7 +49,7 @@ const TelegramShareWidget: React.FC<TelegramShareWidgetProps> = ({
     if (size) {
       script.setAttribute('data-size', size);
     }
-    return script as TelegramScriptElement;
+    return script;
   }, [url, comment, size]);
 
   return (

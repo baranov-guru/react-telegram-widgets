@@ -1,12 +1,12 @@
 import {
   TELEGRAM_LOGIN_SCRIPT_ID,
   TELEGRAM_LOGIN_SCRIPT_SRC,
-} from '../constants';
+} from '../shared/constants';
 import {
   __resetTelegramLoginScriptState,
   loadTelegramLoginScript,
-} from '../loadTelegramLoginScript';
-import { TelegramGlobal, TelegramLoginSdk } from '../types';
+} from '../login/loadTelegramLoginScript';
+import { TelegramGlobal, TelegramLoginSdk } from '../login/types';
 
 type TelegramWindow = {
   Telegram?: TelegramGlobal;
@@ -100,5 +100,22 @@ describe('loadTelegramLoginScript', () => {
     await expect(pending).rejects.toThrow(
       'Telegram Login SDK did not initialize'
     );
+  });
+
+  it('uses a custom scriptSrc when provided', async () => {
+    const pending = loadTelegramLoginScript(
+      'https://example.com/telegram-login.js'
+    );
+    const script = document.getElementById(
+      TELEGRAM_LOGIN_SCRIPT_ID
+    ) as HTMLScriptElement;
+
+    expect(script.src).toBe('https://example.com/telegram-login.js');
+
+    const sdk = createMockSdk();
+    (window as unknown as TelegramWindow).Telegram = { Login: sdk };
+    script.onload?.(new Event('load'));
+
+    await expect(pending).resolves.toBe(sdk);
   });
 });

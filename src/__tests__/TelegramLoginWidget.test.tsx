@@ -8,11 +8,11 @@ import {
 import React from 'react';
 
 import '@testing-library/jest-dom';
-import TelegramLoginWidget from '../TelegramLoginWidget';
-import { loadTelegramLoginScript } from '../loadTelegramLoginScript';
-import { TelegramLoginSdk } from '../types';
+import TelegramLoginWidget from '../login/TelegramLoginWidget';
+import { loadTelegramLoginScript } from '../login/loadTelegramLoginScript';
+import { TelegramLoginSdk } from '../login/types';
 
-jest.mock('../loadTelegramLoginScript', () => ({
+jest.mock('../login/loadTelegramLoginScript', () => ({
   loadTelegramLoginScript: jest.fn(),
 }));
 
@@ -132,5 +132,48 @@ describe('TelegramLoginWidget', () => {
       id_token: 'jwt',
       user: { id: 3, name: 'Ada' },
     });
+  });
+
+  it('keeps the button disabled when disabled prop is true', async () => {
+    render(<TelegramLoginWidget clientId={1} disabled />);
+
+    const button = await screen.findByRole('button', {
+      name: 'Log in with Telegram',
+    });
+
+    await waitFor(() => {
+      expect(sdk.init).toHaveBeenCalled();
+    });
+
+    expect(button).toBeDisabled();
+  });
+
+  it('forwards onError from the SDK callback', async () => {
+    const onError = jest.fn();
+    let initCallback: ((result: unknown) => void) | undefined;
+    sdk.init = jest.fn((_options, callback) => {
+      initCallback = callback;
+    });
+
+    render(<TelegramLoginWidget clientId={1} onError={onError} />);
+
+    await waitFor(() => {
+      expect(sdk.init).toHaveBeenCalled();
+    });
+
+    act(() => {
+      initCallback?.({ error: 'popup_closed' });
+    });
+
+    expect(onError).toHaveBeenCalledWith('popup_closed');
+  });
+
+  it('applies className to the default button', async () => {
+    render(<TelegramLoginWidget clientId={1} className='login-btn' />);
+
+    const button = await screen.findByRole('button', {
+      name: 'Log in with Telegram',
+    });
+    expect(button).toHaveClass('login-btn');
   });
 });

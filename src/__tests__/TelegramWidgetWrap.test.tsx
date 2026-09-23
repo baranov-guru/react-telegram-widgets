@@ -2,8 +2,8 @@ import { render, screen, act } from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom';
-import TelegramWidgetWrap from '../TelegramWidgetWrap';
-import { TelegramScriptElement } from '../types';
+import TelegramWidgetWrap from '../shared/TelegramWidgetWrap';
+import { TelegramScriptElement } from '../shared/types';
 
 const createMockScript = (): TelegramScriptElement => {
   const script = document.createElement('script') as TelegramScriptElement;

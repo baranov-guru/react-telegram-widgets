@@ -1,7 +1,7 @@
 import {
   TELEGRAM_LOGIN_SCRIPT_ID,
   TELEGRAM_LOGIN_SCRIPT_SRC,
-} from './constants';
+} from '../shared/constants';
 import { TelegramGlobal, TelegramLoginSdk } from './types';
 
 type TelegramWindow = {
@@ -64,7 +64,6 @@ export const loadTelegramLoginScript = (
     if (existingScript) {
       existingScript.addEventListener('load', finish);
       existingScript.addEventListener('error', fail);
-      // Script may already have loaded between getLoginSdk check and now.
       if (getLoginSdk()) {
         finish();
       }

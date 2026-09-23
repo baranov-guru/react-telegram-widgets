@@ -3,10 +3,10 @@ import React from 'react';
 
 import TelegramPostWidget, {
   TelegramPostWidgetProps,
-} from '../TelegramPostWidget';
-import TelegramWidgetWrap from '../TelegramWidgetWrap';
+} from '../widgets/TelegramPostWidget';
+import TelegramWidgetWrap from '../shared/TelegramWidgetWrap';
 
-jest.mock('../TelegramWidgetWrap', () => jest.fn(() => null));
+jest.mock('../shared/TelegramWidgetWrap', () => jest.fn(() => null));
 
 describe('TelegramPostWidget', () => {
   const defaultProps: TelegramPostWidgetProps = {

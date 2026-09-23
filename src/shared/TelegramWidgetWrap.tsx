@@ -54,7 +54,9 @@ const TelegramWidgetWrap: React.FC<TelegramWidgetWrapProps> = ({
           };
         }
       };
-      if (container) container.appendChild(script);
+      if (container) {
+        container.appendChild(script);
+      }
     } catch (e) {
       onErrorRef.current?.(e);
     }

@@ -1,13 +1,13 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 
-import { TELEGRAM_WIDGET_SCRIPT_SRC } from '../constants';
+import { TELEGRAM_WIDGET_SCRIPT_SRC } from '../shared/constants';
 import TelegramShareWidget, {
   TelegramShareWidgetProps,
-} from '../TelegramShareWidget';
-import TelegramWidgetWrap from '../TelegramWidgetWrap';
+} from '../widgets/TelegramShareWidget';
+import TelegramWidgetWrap from '../shared/TelegramWidgetWrap';
 
-jest.mock('../TelegramWidgetWrap', () => jest.fn(() => null));
+jest.mock('../shared/TelegramWidgetWrap', () => jest.fn(() => null));
 
 const getLastWrapProps = () =>
   (TelegramWidgetWrap as jest.Mock).mock.calls.at(-1)?.[0] as {
